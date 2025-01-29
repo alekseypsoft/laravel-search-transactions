@@ -8,13 +8,17 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6">
+            <div class="col-3">
                 <label for="user" class="form-label">Пользователь</label>
                 <select id="user" class="form-select form-control">
                     @foreach($users as $user)
                         <option value="{{$user->id}}">{{$user->name}}</option>
                     @endforeach
                 </select>
+            </div>
+            <div class="col-3">
+                <label for="trdate" class="form-label">Дата</label>
+                <input class="form-control" id="trdate" type="month" value="{{date('Y-m')}}"/>
             </div>
                 <div class="col-6">
                     <div class="container">
