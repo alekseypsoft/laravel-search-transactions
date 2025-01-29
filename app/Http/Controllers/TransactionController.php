@@ -21,12 +21,10 @@ class TransactionController extends Controller
      */
     public function search(): View
     {
-        $balances = Transaction::get();
-
         $users = User::whereHas('userAccount', function ($query) {
             $query->whereHas('transactionsFrom')->orWhereHas('transactionsTo');
         })->get();
 
-        return view('transactions.search', compact('balances', 'users'));
+        return view('transactions.search', compact('users'));
     }
 }

@@ -76,9 +76,12 @@
     </nav>
 
     <main class="py-4">
-        {{$header}}
-
         <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    {{$header}}
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     {{ $slot }}
