@@ -8,7 +8,19 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                контент
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="user" class="form-label">Пользователь</label>
+                            <select id="user" class="form-select form-control">
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

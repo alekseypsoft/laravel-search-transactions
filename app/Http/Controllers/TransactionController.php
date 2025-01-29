@@ -25,7 +25,7 @@ class TransactionController extends Controller
 
         $users = User::whereHas('userAccount', function ($query) {
             $query->whereHas('transactionsFrom')->orWhereHas('transactionsTo');
-        });
+        })->get();
 
         return view('transactions.search', compact('balances', 'users'));
     }

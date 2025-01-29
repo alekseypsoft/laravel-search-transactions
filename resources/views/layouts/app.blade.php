@@ -77,7 +77,14 @@
 
     <main class="py-4">
         {{$header}}
-        {{ $slot }}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {{ $slot }}
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 </body>
