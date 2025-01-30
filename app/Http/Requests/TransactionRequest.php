@@ -23,8 +23,8 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => 'required|max:255',
-            'month' => 'required',
+            'userId' => 'exists:App\Models\User,id',
+            'month' => 'regex:/^\d{4}(\-\d{1,2})?$/',
         ];
     }
 }
