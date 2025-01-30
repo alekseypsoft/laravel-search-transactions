@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-3 mt-3">
                 <label for="user" class="form-label">Пользователь</label>
-                <select id="user" class="form-select form-control">
+                <select id="user" class="form-select form-control" onchange="getBalance()">
                     @foreach($users as $user)
                         <option value="{{$user->id}}">{{$user->name}}</option>
                     @endforeach
@@ -69,7 +69,7 @@
                 dataType: 'json',
                 data: {userId: userId, month: month},
                 success: function (data) {
-                    alert(data);
+                    $('#balance').text(data.balance);
                 }
             })
         }

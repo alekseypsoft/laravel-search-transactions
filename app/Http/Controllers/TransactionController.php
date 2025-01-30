@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Http\Requests\TransactionRequest;
+use App\Services\TransactionService;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,8 +30,11 @@ class TransactionController extends Controller
         return view('transactions.search', compact('users'));
     }
 
-   public function balance(TransactionRequest $request): JsonResponse
+   public function balance(TransactionRequest $request, TransactionService $service): JsonResponse
    {
-        return response()->json([]);
+        $user = User::find($request->userId);
+        $balance = $service->getMonthBalance($user, $request->month);
+
+        return response()->json(['balance' => $balance]);
    }
 }
