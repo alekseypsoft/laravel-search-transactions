@@ -19,9 +19,28 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-3 mt-3">
-                <label for="month" class="form-label">Дата</label>
-                <input class="form-control" id="month" type="month" value="{{$date}}" onchange="getBalance()" min="1900-01"/>
+            <div class="col-md-3 mt-3 border p-2 rounded">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="searchBy" id="searchByMonth" value="month">
+                    <label class="form-check-label" for="searchByMonth">Поиск по месяцам</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="searchBy" id="searchByYear" checked value="year">
+                    <label class="form-check-label" for="searchByYear">Поиск по годам</label>
+                </div>
+                <div id="byMonth" class="mt-3">
+                    <label for="month" class="form-label">Дата</label>
+                    <input class="form-control" id="month" type="month" value="{{$date}}" onchange="getBalance()" min="1900-01"/>
+                </div>
+                <div id="byYear" class="mt-3">
+                    <label for="year" class="form-label">Год</label>
+                    <select id="year" class="form-select form-control" onchange="getBalance()">
+                        @foreach(range(2025, 2000) as $year)
+                            <option value="{{$year}}">{{$year}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
             </div>
             <div class="col-md-6">
                 <div class="container">
@@ -73,6 +92,19 @@
                 }
             })
         }
+
+        $("input[name=searchBy]").on("change", function(){
+            var val = $("input[type=radio][name=searchBy]:checked").val();
+
+            if(val == "month") {
+                $("#byMonth").show();
+                $("#byYear").hide();
+            }
+            else{
+                $("#byYear").show();
+                $("#byMonth").hide();
+            }
+        })
     </script>
 </x-app-layout>
 
