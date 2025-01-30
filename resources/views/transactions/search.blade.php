@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-3 mt-3">
                 <label for="month" class="form-label">Дата</label>
-                <input class="form-control" id="month" type="month" value="{{$date}}" onchange="getBalance()"/>
+                <input class="form-control" id="month" type="month" value="{{$date}}" onchange="getBalance()" min="1900-01"/>
             </div>
             <div class="col-md-6">
                 <div class="container">

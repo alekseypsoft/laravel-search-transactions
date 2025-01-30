@@ -18,7 +18,11 @@ class TransactionService
     {
         $user = $user->with(['userAccount.transactionsFrom' => function ($query) use ($month) {
             $query->where('trdate', 'like', $month . '%');
-        }])->where('id', $user->id)->first();
+        }])
+            ->with(['userAccount.transactionsTo' => function ($query) use ($month) {
+                $query->where('trdate', 'like', $month . '%');
+            }])
+            ->where('id', $user->id)->first();
         $balance1 = array_reduce($user->userAccount->transactionsFrom->toArray(), function ($acc, $t) {
             return $acc + $t['amount'];
         });
