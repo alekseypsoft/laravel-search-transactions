@@ -8,5 +8,4 @@
 ## Для npm нужно запускать
 ``sail npm install``
 
-Для режима разработки `` sail npm run dev``
 
