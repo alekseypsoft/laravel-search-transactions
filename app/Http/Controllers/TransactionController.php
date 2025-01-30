@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\TransactionRequest;
+use Illuminate\Routing\Controller;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class TransactionController extends Controller
 {
@@ -27,4 +28,9 @@ class TransactionController extends Controller
 
         return view('transactions.search', compact('users'));
     }
+
+   public function balance(TransactionRequest $request): JsonResponse
+   {
+        return response()->json([]);
+   }
 }

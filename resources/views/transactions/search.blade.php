@@ -20,36 +20,59 @@
                 </select>
             </div>
             <div class="col-md-3 mt-3">
-                <label for="trdate" class="form-label">Дата</label>
-                <input class="form-control" id="trdate" type="month" value="{{$date}}"/>
+                <label for="month" class="form-label">Дата</label>
+                <input class="form-control" id="month" type="month" value="{{$date}}" onchange="getBalance()"/>
             </div>
             <div class="col-md-6">
                 <div class="container">
                     <div class="row">
-                            <div class="card mt-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Пользователь</h5>
-                                    <div class="card-text">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Месяц</th>
-                                                <th scope="col">Баланс</th>
-                                            </tr>
-                                            </thead>
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Пользователь</h5>
+                                <div class="card-text">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Месяц</th>
+                                            <th scope="col">Баланс</th>
+                                        </tr>
+                                        </thead>
                                         <tbody>
                                         <tr>
                                             <th scope="row">{{$date}}</th>
-                                            <td>{{$transactionService->getMonthBalance($users[0], $date)}}</td>
+                                            <td id="balance">{{$transactionService->getMonthBalance($users[0], $date)}}</td>
                                         </tr>
                                         </tbody>
-                                        </table>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function getBalance() {
+            var userId = $('#user').val();
+            var month = $('#month').val();
+
+            $.ajax({
+                url: '/get-user-balance',
+                method: 'get',
+                dataType: 'json',
+                data: {userId: userId, month: month},
+                success: function (data) {
+                    alert(data);
+                }
+            })
+        }
+    </script>
 </x-app-layout>
 

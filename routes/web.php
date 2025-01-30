@@ -6,10 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([
     'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
 ])->group(function () {
     Route::get('/', [TransactionController::class, 'search'])->name('dashboard');
+    Route::get('/get-user-balance', [TransactionController::class, 'balance'])->name('balance');
 });
 
 Auth::routes();
