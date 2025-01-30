@@ -25,6 +25,7 @@ class TransactionRequest extends FormRequest
         return [
             'userId' => 'exists:App\Models\User,id',
             'month' => 'regex:/^\d{4}(\-\d{1,2})?$/',
+            'year' => 'integer|digits:4',
         ];
     }
 }

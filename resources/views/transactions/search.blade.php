@@ -21,14 +21,14 @@
             </div>
             <div class="col-md-3 mt-3 border p-2 rounded">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="searchBy" id="searchByMonth" value="month">
+                    <input class="form-check-input" type="radio" name="searchBy" id="searchByMonth" value="month" onchange="getBalance()">
                     <label class="form-check-label" for="searchByMonth">Поиск по месяцам</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="searchBy" id="searchByYear" checked value="year">
+                    <input class="form-check-input" type="radio" name="searchBy" id="searchByYear" checked value="year" onchange="getBalance()">
                     <label class="form-check-label" for="searchByYear">Поиск по годам</label>
                 </div>
-                <div id="byMonth" class="mt-3">
+                <div id="byMonth" class="mt-3" style="display:none">
                     <label for="month" class="form-label">Дата</label>
                     <input class="form-control" id="month" type="month" value="{{$date}}" onchange="getBalance()" min="1900-01"/>
                 </div>
@@ -59,7 +59,7 @@
                                         <tbody>
                                         <tr>
                                             <th scope="row">{{$date}}</th>
-                                            <td id="balance">{{$transactionService->getMonthBalance($users[0], $date)}}</td>
+                                            <td id="balance">{{$transactionService->getMonthBalance($users[0], $date, null)}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -80,13 +80,22 @@
 
         function getBalance() {
             var userId = $('#user').val();
-            var month = $('#month').val();
+            var data = {userId: userId};
+            var val = $("input[type=radio][name=searchBy]:checked").val();
+
+            if(val === "month") {
+                data.month = $('#month').val();
+            }
+            else{
+                data.year = $('#year').val();
+                $('#month').val(data.year + "-01");
+            }
 
             $.ajax({
                 url: '/get-user-balance',
                 method: 'get',
                 dataType: 'json',
-                data: {userId: userId, month: month},
+                data: data,
                 success: function (data) {
                     $('#balance').text(data.balance);
                 }
@@ -96,7 +105,7 @@
         $("input[name=searchBy]").on("change", function(){
             var val = $("input[type=radio][name=searchBy]:checked").val();
 
-            if(val == "month") {
+            if(val === "month") {
                 $("#byMonth").show();
                 $("#byYear").hide();
             }

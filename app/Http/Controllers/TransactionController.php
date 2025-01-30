@@ -30,11 +30,27 @@ class TransactionController extends Controller
         return view('transactions.search', compact('users'));
     }
 
+    /**
+     * Получить баланс по AJAX
+     *
+     * @param TransactionRequest $request
+     *
+     * @param TransactionService $service
+     * @return JsonResponse
+     */
    public function balance(TransactionRequest $request, TransactionService $service): JsonResponse
    {
         $user = User::find($request->userId);
-        $balance = $service->getMonthBalance($user, $request->month);
 
-        return response()->json(['balance' => $balance]);
+        if($request->month !== null){
+            $balance = $service->getMonthBalance($user, $request->month);
+            $result = ['balance' => $balance];
+        }
+        else{
+            $balance = $service->getYearBalance($user, $request->year);
+            $result = ['balance' => $balance];
+        }
+
+       return response()->json($result);
    }
 }

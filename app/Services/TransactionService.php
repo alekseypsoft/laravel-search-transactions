@@ -9,7 +9,7 @@ class TransactionService
     /**
      * Получение месячного баланса
      *
-     * @param User $user Пользователь
+     * @param User $user Пользователь для которого получается баланс
      * @param string $month Месяц
      *
      * @return float Месячный баланс
@@ -31,5 +31,24 @@ class TransactionService
         });
 
         return $balance1 - $balance2;
+    }
+
+    /**
+     * Поолучить годовой баланс
+     *
+     * @param User $user Пользователь для которого получается баланс
+     * @param string $year Год
+     *
+     * @return array
+     */
+    public function getYearBalance(User $user, string $year): array{
+        $list = [];
+
+        for($i = 0; $i < 12; $i++){
+            $str = sprintf('%02d', $i);
+            $list[$year . '-' .  $str] =  $this->getMonthBalance($user, $year . '-' .  $str);
+        }
+
+        return $list;
     }
 }
