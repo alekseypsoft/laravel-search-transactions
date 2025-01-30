@@ -11,7 +11,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-3">
+            <div class="col-md-3 mt-3">
                 <label for="user" class="form-label">Пользователь</label>
                 <select id="user" class="form-select form-control">
                     @foreach($users as $user)
@@ -19,18 +19,17 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-3">
+            <div class="col-md-3 mt-3">
                 <label for="trdate" class="form-label">Дата</label>
                 <input class="form-control" id="trdate" type="month" value="{{$date}}"/>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12">
-                            <div class="card">
+                            <div class="card mt-3">
                                 <div class="card-body">
                                     <h5 class="card-title">Пользователь</h5>
-                                    <p class="card-text">
+                                    <div class="card-text">
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -45,13 +44,10 @@
                                         </tr>
                                         </tbody>
                                         </table>
-
-                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
