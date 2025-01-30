@@ -1,4 +1,7 @@
 @inject('transactionService', 'App\Services\TransactionService')
+@php
+    $date = date('Y-m') //Первоначальное значение даты
+@endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -18,23 +21,39 @@
             </div>
             <div class="col-3">
                 <label for="trdate" class="form-label">Дата</label>
-                <input class="form-control" id="trdate" type="month" value="{{date('Y-m')}}"/>
+                <input class="form-control" id="trdate" type="month" value="{{$date}}"/>
             </div>
-                <div class="col-6">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card" >
-                                    <div class="card-body">
-                                        <h5 class="card-title">Пользователь</h5>
-                                        <p class="card-text">Месячный баланс: {{$transactionService->getMonthBalance($users[0])}}</p>
-                                    </div>
+            <div class="col-6">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Пользователь</h5>
+                                    <p class="card-text">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Месяц</th>
+                                                <th scope="col">Баланс</th>
+                                            </tr>
+                                            </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">{{$date}}</th>
+                                            <td>{{$transactionService->getMonthBalance($users[0], $date)}}</td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </x-app-layout>
 
