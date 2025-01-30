@@ -1,6 +1,5 @@
-@inject('transactionService', 'App\Services\TransactionService')
 @php
-    $date = date('Y-m') //Первоначальное значение даты
+    $date = "2024-01" //Первоначальное значение даты
 @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -36,7 +35,7 @@
                     <label for="year" class="form-label">Год</label>
                     <select id="year" class="form-select form-control" onchange="getBalance()">
                         @foreach(range(2025, 2000) as $year)
-                            <option value="{{$year}}">{{$year}}</option>
+                            <option value="{{$year}}"  {{ $year == "2024" ? "selected": "" }}>{{$year}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -49,7 +48,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Пользователь</h5>
                                 <div class="card-text">
-                                    <table class="table">
+                                    <table class="table balances-table">
                                         <thead>
                                         <tr>
                                             <th scope="col">Месяц</th>
@@ -58,8 +57,8 @@
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <th scope="row">{{$date}}</th>
-                                            <td id="balance">{{$transactionService->getMonthBalance($users[0], $date, null)}}</td>
+                                            <th scope="row"></th>
+                                            <td id="balance"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -97,8 +96,13 @@
                 dataType: 'json',
                 data: data,
                 success: function (data) {
-                    $('#balance').text(data.balance);
-                }
+                        const arr = Object.entries(data);
+                        //balances-table
+                        $(".balances-table tbody").empty();
+                        arr.forEach(function(val){
+                            $(".balances-table tbody").append('<tr><th scope="row">' + val[0] +'</th> <td id="balance">' + val[1] +'</td></tr>');
+                        })
+                    }
             })
         }
 
@@ -113,6 +117,10 @@
                 $("#byYear").show();
                 $("#byMonth").hide();
             }
+        })
+
+        $(document).ready(function(){
+            getBalance();
         })
     </script>
 </x-app-layout>

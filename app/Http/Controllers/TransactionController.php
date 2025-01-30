@@ -44,11 +44,11 @@ class TransactionController extends Controller
 
         if($request->month !== null){
             $balance = $service->getMonthBalance($user, $request->month);
-            $result = ['balance' => $balance];
+            $result = [$request->month => $balance];
         }
         else{
             $balance = $service->getYearBalance($user, $request->year);
-            $result = ['balance' => $balance];
+            $result = $balance;
         }
 
        return response()->json($result);

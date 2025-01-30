@@ -30,7 +30,7 @@ class TransactionService
             return $acc + $t['amount'];
         });
 
-        return $balance1 - $balance2;
+        return  $balance2 - $balance1;
     }
 
     /**
@@ -44,7 +44,7 @@ class TransactionService
     public function getYearBalance(User $user, string $year): array{
         $list = [];
 
-        for($i = 0; $i < 12; $i++){
+        for($i = 1; $i <= 12; $i++){
             $str = sprintf('%02d', $i);
             $list[$year . '-' .  $str] =  $this->getMonthBalance($user, $year . '-' .  $str);
         }
